@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ricePrefabs:
+  - {fileID: 3228438785993681093, guid: a47125f257c4df74e824d2ae5bc15df8, type: 3}
   - {fileID: 3228438785993681093, guid: a962d8e4a2ee2284dbd5991c020e3c89, type: 3}
   riceCount: 100
   shape: 2
@@ -481,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sushi: {fileID: 1060213695}
-  FPrefab: {fileID: 6478462680656846403, guid: 6ddcaf1845490fe42b61960f79ded48d, type: 3}
+  FPrefab: {fileID: 2600356029661984027, guid: 395cfcaef4215ef4aac3b2892c97f72f, type: 3}
 --- !u!1 &1564025493
 GameObject:
   m_ObjectHideFlags: 0
