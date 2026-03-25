@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Custom_Water
+  m_Shader: {fileID: 4800000, guid: 54bcd55f4873fb3429ca058653346de3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 10309, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 64d52b66ed04e794f9971c4437f7c18d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DilateRadius: 1
+    - _EdgeIntensity: 1
+    - _EdgeWidth: 0.1
+    - _ExpandRadius: 1
+    - _FarAlpha: 1
+    - _MaxDistance: 20
+    - _MinDistance: 0
+    - _NearAlpha: 0.5
+    - _NoiseScale: 0.15
+    - _NoiseStrength: 1.5
+    - _RippleAmplitude: 10
+    - _RippleDecayPower: 2
+    - _RippleFrequency: 0
+    - _RippleRadius: 1.2
+    - _RippleRange: 0.05
+    - _RippleSpeed: 3
+    - _RippleWidth: 0.5
+    m_Colors:
+    - _Color: {r: 0.033018887, g: 0.76436466, b: 1, a: 1}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
+    - _FarColor: {r: 0.003921569, g: 0.15294118, b: 0.2901961, a: 1}
+    - _NearColor: {r: 0.08235294, g: 0.7137255, b: 0.8470589, a: 1}
+    - _RippleCenter: {r: 0, g: 0, b: 0, a: 0}
+    - _RippleColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _WaterColor: {r: 0.19999996, g: 0.6, b: 0.9, a: 0.8}
+  m_BuildTextureStacks: []
