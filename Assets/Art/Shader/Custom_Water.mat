@@ -35,14 +35,14 @@ Material:
     m_Floats:
     - _DilateRadius: 1
     - _EdgeIntensity: 1
-    - _EdgeWidth: 0.1
+    - _EdgeWidth: 0.15
     - _ExpandRadius: 1
     - _FarAlpha: 1
     - _MaxDistance: 20
     - _MinDistance: 0
-    - _NearAlpha: 0.5
+    - _NearAlpha: 0.45
     - _NoiseScale: 0.15
-    - _NoiseStrength: 1.5
+    - _NoiseStrength: 2.5
     - _RippleAmplitude: 10
     - _RippleDecayPower: 2
     - _RippleFrequency: 0
@@ -54,8 +54,8 @@ Material:
     - _Color: {r: 0.033018887, g: 0.76436466, b: 1, a: 1}
     - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
-    - _FarColor: {r: 0.003921569, g: 0.15294118, b: 0.2901961, a: 1}
-    - _NearColor: {r: 0.08235294, g: 0.7137255, b: 0.8470589, a: 1}
+    - _FarColor: {r: 0.05873977, g: 0.22459607, b: 0.3773585, a: 1}
+    - _NearColor: {r: 0.16055535, g: 0.7111428, b: 0.8301887, a: 1}
     - _RippleCenter: {r: 0, g: 0, b: 0, a: 0}
     - _RippleColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _WaterColor: {r: 0.19999996, g: 0.6, b: 0.9, a: 0.8}
