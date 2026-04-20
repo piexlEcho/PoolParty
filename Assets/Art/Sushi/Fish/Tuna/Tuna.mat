@@ -35,13 +35,13 @@ Material:
     - _RimIntensity: 0.4
     - _RimPower: 1.39
     - _RimSmoothness: 0
-    - _RimThreshold: 0.759
+    - _RimThreshold: 0.7
     - _ShadowSmoothness: 0.5
     - _ShadowThreshold: 1
     - _SpecularGloss: 15
-    - _SpecularSize: 0.2
+    - _SpecularSize: 0.18
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 1, g: 0.7736396, b: 0.53301877, a: 1}
   m_BuildTextureStacks: []
