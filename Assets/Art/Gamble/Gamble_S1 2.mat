@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Gamble_S1 2
+  m_Shader: {fileID: 4800000, guid: 2fa8ea6556138f946b6a016c8e38a64f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: e92e750fa8fe41f4e948afe7037d7957, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Darkness: 0.2
+    - _DiffuseSmoothness: 0
+    - _DiffuseThreshold: 0.35
+    - _RimIntensity: 1.5
+    - _RimPower: 1.39
+    - _RimSmoothness: 0.1
+    - _RimThreshold: 0.7
+    - _ShadowSmoothness: 0.5
+    - _ShadowThreshold: 1
+    - _SpecularGloss: 60
+    - _SpecularSize: 0.2
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.5188679, g: 0.3232549, b: 0.14929688, a: 1}
+    - _SpecularColor: {r: 1, g: 0.6428364, b: 0.5330188, a: 1}
+  m_BuildTextureStacks: []
