@@ -69,12 +69,18 @@ public class SushiBreakable : MonoBehaviour
                 // 计算施加的力：基础方向力 + 随机偏移 + 向上分量
                 Vector3 force = (impactDir * 1) * (impactStrength * baseExplosionForce);
                 force += Random.insideUnitSphere * randomForceRange;
-                force += Vector3.up * upwardBias;
+                force += Vector3.up * upwardBias;// 应用力
 
                 grainRb.AddForce(force, ForceMode.Impulse);
             }
 
             grains.Add(grain);
+        }
+        // 通知摄像机开始俯视追踪
+        CameraTopDownTracker tracker = Camera.main?.GetComponent<CameraTopDownTracker>();
+        if (tracker != null)
+        {
+            tracker.StartTracking();
         }
 
         // 销毁寿司整体（延迟一点确保生成完成）

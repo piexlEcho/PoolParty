@@ -7,6 +7,7 @@ TagManager:
   - RippleSource
   - Sushi
   - Shooter
+  - RiceGrain
   layers:
   - Default
   - TransparentFX
