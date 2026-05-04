@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Gamble_S1
+  m_Name: LifeRing
   m_Shader: {fileID: 4800000, guid: 2fa8ea6556138f946b6a016c8e38a64f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,24 +24,24 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5e9fc4b6530a6b547b0f9a35d15ceddf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 839ffc94ca84e594d9285630caa4de72, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Darkness: 0.2
-    - _DiffuseSmoothness: 0
-    - _DiffuseThreshold: 0.35
+    - _Darkness: 0.3
+    - _DiffuseSmoothness: 0.1
+    - _DiffuseThreshold: 0.2
     - _RimIntensity: 1.5
     - _RimPower: 1.39
-    - _RimSmoothness: 0.1
-    - _RimThreshold: 0.7
+    - _RimSmoothness: 0
+    - _RimThreshold: 0.5
     - _ShadowSmoothness: 0.5
     - _ShadowThreshold: 1
-    - _SpecularGloss: 20
-    - _SpecularSize: 0.2
+    - _SpecularGloss: 35
+    - _SpecularSize: 0.005
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 0.5188679, g: 0.3232549, b: 0.14929688, a: 1}
-    - _SpecularColor: {r: 1, g: 0.6428364, b: 0.5330188, a: 1}
+    - _RimColor: {r: 0.78431374, g: 0.2655574, b: 0.17647056, a: 1}
+    - _SpecularColor: {r: 0.972549, g: 0.592693, b: 0.5254902, a: 1}
   m_BuildTextureStacks: []
