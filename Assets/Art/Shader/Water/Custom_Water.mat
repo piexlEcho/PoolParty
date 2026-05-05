@@ -24,11 +24,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _CausticsTex:
-        m_Texture: {fileID: 2800000, guid: ce18678aacf80784ba1a36d28d6d6a76, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0ea16becac309044abaa7c1787f0ce34, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
-        m_Texture: {fileID: 2800000, guid: 64d52b66ed04e794f9971c4437f7c18d, type: 3}
+        m_Texture: {fileID: 2800000, guid: a501e56c5503eb34c917f82425551e68, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -39,43 +39,56 @@ Material:
         m_Texture: {fileID: 2800000, guid: 64d52b66ed04e794f9971c4437f7c18d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 64d52b66ed04e794f9971c4437f7c18d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _CausticsDepth: 0.3
     - _CausticsIntensity: 1.2
     - _CausticsScale: 0.03
+    - _DepthAbsorption: 2
     - _DilateRadius: 1
-    - _DistortScale: 0.03
-    - _DistortStrength: 0.1
+    - _DistortScale: 0.1
+    - _DistortStrength: 0.06
     - _EdgeIntensity: 1
     - _EdgeWidth: 1
     - _ExpandRadius: 1
     - _FarAlpha: 1
+    - _MainTexFar: 0.3
+    - _MainTexIntensity: 1
+    - _MainTexNear: 1.7
     - _MainTexScale: 0.05
+    - _MainTexStrength: 0
     - _MaxDistance: 35
     - _MinDistance: 0
     - _NearAlpha: 0.6
     - _NoiseScale: 0.1
     - _NoiseStrength: 10
-    - _RainbowScale: 10
+    - _NormalScale: -0.38
+    - _NormalStrength: 0.548
+    - _RainbowScale: 20
     - _RainbowSpeed: 2
     - _RainbowStrength: 1
     - _RippleAmplitude: 10
+    - _RippleColorStrength: 2
     - _RippleDecayPower: 2
+    - _RippleDistortStrength: 1
     - _RippleFrequency: 0
     - _RippleRadius: 1.2
     - _RippleRange: 0.05
     - _RippleSpeed: 3
     - _RippleWidth: 0.5
     m_Colors:
-    - _CausticsSpeed: {r: -0.05, g: -0.03, b: 0, a: 0}
+    - _CausticsSpeed: {r: -0.1, g: -0.06, b: 0, a: 0}
     - _Color: {r: 0.033018887, g: 0.76436466, b: 1, a: 1}
-    - _EdgeColor: {r: 0.514151, g: 1, b: 0.9190251, a: 1}
+    - _EdgeColor: {r: 0, g: 1, b: 0.970052, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
-    - _FarColor: {r: 0.28439835, g: 0.5679224, b: 0.7830189, a: 1}
-    - _MainTexSpeed: {r: 0.05, g: 0.03, b: 0, a: 0}
-    - _NearColor: {r: 0.3254717, g: 0.8776957, b: 1, a: 1}
+    - _FarColor: {r: 0.27727836, g: 0.6464763, b: 0.8773585, a: 1}
+    - _MainTexSpeed: {r: 0.1, g: 0.06, b: 0, a: 0}
+    - _NearColor: {r: 0.5424528, g: 0.9948007, b: 1, a: 1}
     - _RippleCenter: {r: 0, g: 0, b: 0, a: 0}
-    - _RippleColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _RippleColor: {r: 1, g: 1, b: 1, a: 1}
     - _WaterColor: {r: 0.19999996, g: 0.6, b: 0.9, a: 0.8}
   m_BuildTextureStacks: []

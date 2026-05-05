@@ -5,12 +5,12 @@ public class SushiBreakable : MonoBehaviour
 {
     [Header("米粒生成")]
     public GameObject riceGrainPrefab;          // 米粒预制体
-    public Transform[] spawnPoints;             // 米粒生成点位（局部坐标）
+    public Transform[] spawnPoints;
 
     [Header("爆炸力参数")]
-    public float baseExplosionForce = 10f;      // 基础爆炸力
-    public float randomForceRange = 3f;         // 随机力范围
-    public float upwardBias = 2f;               // 向上偏移
+    public float baseExplosionForce = 10f;
+    public float randomForceRange = 3f;
+    public float upwardBias = 2f;
 
     [Header("碰撞设置")]
     public string projectileTag = "Projectile"; // 能触发散开的标签
@@ -76,14 +76,13 @@ public class SushiBreakable : MonoBehaviour
 
             grains.Add(grain);
         }
-        // 通知摄像机开始俯视追踪
+        // 摄像机开始追踪
         CameraTopDownTracker tracker = Camera.main?.GetComponent<CameraTopDownTracker>();
         if (tracker != null)
         {
             tracker.StartTracking();
         }
 
-        // 销毁寿司整体（延迟一点确保生成完成）
         Destroy(gameObject, 0.05f);
     }
 

@@ -6,10 +6,10 @@ public class CameraTopDownTracker : MonoBehaviour
     [Header("追踪参数")]
     public string grainTag = "RiceGrain";
 
-    [Tooltip("摄像机在世界空间中的固定高度 (Y 轴)")]
+    [Tooltip("摄像固定高度")]
     public float fixedHeight = 10f;
 
-    [Tooltip("俯视角度 (绕 X 轴，90° 为完全向下)")]
+    [Tooltip("俯视角度")]
     [Range(0f, 90f)]
     public float lookDownAngle = 90f;
 
@@ -17,7 +17,6 @@ public class CameraTopDownTracker : MonoBehaviour
     public float smoothTime = 0.3f;
 
     [Header("Z 轴限制")]
-    [Tooltip("即使米粒飞得更远，摄像机也不会超过这个 Z 坐标")]
     public float maxTrackingZ = 45f;
 
     [Header("状态")]
@@ -39,7 +38,7 @@ public class CameraTopDownTracker : MonoBehaviour
         isTracking = true;
         recordedMaxZ = float.MinValue;
 
-        // 锁定当前的 X 和 Y 坐标 (只跟随 Z)
+        // 锁定xy
         fixedX = transform.position.x;
         fixedY = fixedHeight;
     }
@@ -49,27 +48,24 @@ public class CameraTopDownTracker : MonoBehaviour
         isTracking = false;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (!isTracking) return;
 
-        // 找到当前所有米粒中 Z 坐标最大的值，并限制不超过最大追踪距离
+        // 不超过最大追踪距离
         float currentMaxZ = FindMaxGrainZ();
         if (currentMaxZ > recordedMaxZ)
         {
             recordedMaxZ = Mathf.Min(currentMaxZ, maxTrackingZ);
         }
 
-        // 使用记录的 Z 值（可能被钳制在 maxTrackingZ）
         float desiredZ = recordedMaxZ;
 
-        // 平滑 Z 轴移动
+        // 平滑 Z移动
         targetZ = Mathf.SmoothDamp(targetZ, desiredZ, ref smoothVelocity, smoothTime);
 
-        // 更新摄像机位置：X、Y 固定，Z 平滑跟随
         transform.position = new Vector3(fixedX, fixedY, targetZ);
 
-        // 保持俯视角度
         transform.rotation = Quaternion.Euler(lookDownAngle, 0f, 0f);
     }
 

@@ -1,9 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// 3D 子弹发射器：按下指定按键从射击口生成子弹，子弹沿射击口前方飞行。
-/// 速度与方向可通过其他脚本或 Inspector 动态修改。
-/// </summary>
 public class Shooter : MonoBehaviour
 {
     public GameObject bulletPrefab;
@@ -68,26 +64,17 @@ public class Shooter : MonoBehaviour
         bulletSpeed = Mathf.Max(0f, newSpeed);
     }
 
-    /// <summary>
-    /// 设置发射方向为射击口的当前前向（关闭自定义方向）
-    /// </summary>
     public void UseShootPointForward()
     {
         useCustomDirection = false;
     }
 
-    /// <summary>
-    /// 设置自定义发射方向（自动开启自定义方向）
-    /// </summary>
     public void SetCustomDirection(Vector3 newDirection)
     {
         useCustomDirection = true;
         customDirection = newDirection.normalized;
     }
 
-    /// <summary>
-    /// 直接修改射击口 Transform 的旋转（会影响射击口前向）
-    /// </summary>
     public void RotateShootPoint(Quaternion newRotation)
     {
         if (shootPoint != null)
