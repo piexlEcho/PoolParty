@@ -4,64 +4,108 @@ public class Shooter : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform shootPoint;
-    public KeyCode shootKey = KeyCode.Mouse0;
-    public float bulletSpeed = 20f;
 
-    public bool useCustomDirection = false;
+    public KeyCode startChargeKey = KeyCode.P;
+    public KeyCode addPowerKey = KeyCode.B;
 
+    public float baseSpeed = 20f;
+    public float maxChargeTime = 1f;
+    public float maxSpeed = 200f;
+    public float growthRate = 0.35f;
+
+    private float currentChargeTime = 0f;
+    private int bPressCount = 0;
+    private bool isCharging = false;
+
+    public bool useCustomDirection = false;// 是否使用自定义方向
     public Vector3 customDirection = Vector3.forward;
 
     private void Update()
     {
-        if (Input.GetKeyDown(shootKey))
+        // 开始蓄力
+        if (Input.GetKeyDown(startChargeKey) && !isCharging)
         {
-            Shoot();
+            StartCharge();
+        }
+
+        if (isCharging)
+        {
+            currentChargeTime += Time.deltaTime;
+
+            // 按 B 增加蓄力
+            if (Input.GetKeyDown(addPowerKey))
+            {
+                bPressCount++;
+            }
+
+            // 到时间自动发射
+            if (currentChargeTime >= maxChargeTime)
+            {
+                Fire();
+                ResetCharge();
+            }
         }
     }
 
-    public void Shoot()
+    void StartCharge()
     {
-        if (bulletPrefab == null)
-        {
-            return;
-        }
+        isCharging = true;
+        currentChargeTime = 0f;
+        bPressCount = 0;
+    }
 
-        if (shootPoint == null)
-        {
-            return;
-        }
+    void ResetCharge()
+    {
+        isCharging = false;
+        currentChargeTime = 0f;
+        bPressCount = 0;
+    }
 
-        Vector3 shootDirection = GetShootDirection();
+    void Fire()
+    {
+        if (bulletPrefab == null || shootPoint == null) return;
 
-        // 实例化子弹
+        Vector3 dir = GetShootDirection();
+
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, Quaternion.identity);
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.velocity = shootDirection.normalized * bulletSpeed;
+            float speed = CalculateSpeed();
+            rb.velocity = dir.normalized * speed;
         }
 
-        // 子弹朝向与方向一致
-        bullet.transform.forward = shootDirection.normalized;
+        bullet.transform.forward = dir.normalized;
+    }
+
+    float CalculateSpeed()
+    {
+        if (bPressCount <= 0)
+        {
+            return baseSpeed;
+        }
+
+        float t = 1f - Mathf.Exp(-growthRate * bPressCount);
+
+        float speed = Mathf.Lerp(baseSpeed, maxSpeed, t);
+
+        return Mathf.Min(speed, maxSpeed);
     }
 
     private Vector3 GetShootDirection()
     {
         if (useCustomDirection)
-        {
             return customDirection.normalized;
-        }
         else
-        {
             return shootPoint.forward;
-        }
     }
 
-    // ---------- 以下为方便外部调节速度与方向的公共方法 ----------
-    public void SetBulletSpeed(float newSpeed)
+    // ---------- 外部接口 ----------
+    public void SetCustomDirection(Vector3 newDirection)
     {
-        bulletSpeed = Mathf.Max(0f, newSpeed);
+        useCustomDirection = true;
+        customDirection = newDirection.normalized;
     }
 
     public void UseShootPointForward()
@@ -69,17 +113,9 @@ public class Shooter : MonoBehaviour
         useCustomDirection = false;
     }
 
-    public void SetCustomDirection(Vector3 newDirection)
-    {
-        useCustomDirection = true;
-        customDirection = newDirection.normalized;
-    }
-
     public void RotateShootPoint(Quaternion newRotation)
     {
         if (shootPoint != null)
-        {
             shootPoint.rotation = newRotation;
-        }
     }
 }

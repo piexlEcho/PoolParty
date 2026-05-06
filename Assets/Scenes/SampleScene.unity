@@ -1207,8 +1207,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 964737104152971915, guid: 3f23e05c62afd66479fd1a1d10fa692b, type: 3}
   shootPoint: {fileID: 1879110407}
-  shootKey: 32
-  bulletSpeed: 60
+  startChargeKey: 112
+  addPowerKey: 98
+  baseSpeed: 5
+  maxChargeTime: 1
+  maxSpeed: 180
+  growthRate: 0.035
   useCustomDirection: 0
   customDirection: {x: 0, y: 0, z: 1}
 --- !u!23 &1879110405
