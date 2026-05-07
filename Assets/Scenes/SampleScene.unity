@@ -535,7 +535,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 963194228}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   m_Layer: 0
@@ -586,7 +585,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 95.6
+  field of view: 41.2
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -612,31 +611,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19439577, y: -0, z: -0, w: 0.9809232}
-  m_LocalPosition: {x: 0.1, y: 4.7, z: -109.9}
+  m_LocalRotation: {x: -0.03240831, y: -0.15942246, z: -0.0052364427, w: 0.9866645}
+  m_LocalPosition: {x: -23.8, y: -0.8, z: -72.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 22.419, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eef3b7de64d6d142be5bea8f80c1838, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grainTag: RiceGrain
-  fixedHeight: 5
-  lookDownAngle: 18.1
-  smoothTime: 0.15
-  maxTrackingZ: 25
-  isTracking: 0
+  m_LocalEulerAnglesHint: {x: -3.763, y: -18.357, z: 0}
 --- !u!1001 &984901507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -841,6 +822,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ShowTutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 679978239954650829, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 810297450031561148, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationLoop
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 810297450031561148, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationVibrato
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 810297450031561148, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotateStrength.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 810297450031561148, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 988611081055233812, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -861,6 +862,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: QuitGame
       objectReference: {fileID: 0}
+    - target: {fileID: 1393057553139638372, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationLoop
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393057553139638372, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationVibrato
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393057553139638372, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotateStrength.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393057553139638372, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751416945218807601, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -57
+      objectReference: {fileID: 0}
     - target: {fileID: 2503479450067313390, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -868,6 +889,22 @@ PrefabInstance:
     - target: {fileID: 2503479450067313390, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ShowMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588145343061070246, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationLoop
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588145343061070246, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationVibrato
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588145343061070246, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotateStrength.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588145343061070246, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationDuration
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2906972047310600512, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_Pivot.x
@@ -935,7 +972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2906972047310600512, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.49
+      value: -0.724
       objectReference: {fileID: 0}
     - target: {fileID: 2906972047310600512, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -961,6 +998,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 208614860}
+    - target: {fileID: 3595334901502754364, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4180118362452681249, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -968,6 +1009,38 @@ PrefabInstance:
     - target: {fileID: 4320643068486223437, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_Name
       value: Canvas 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892634014771705845, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationLoop
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892634014771705845, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationVibrato
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892634014771705845, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotateStrength.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892634014771705845, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121714572232030334, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationLoop
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121714572232030334, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationVibrato
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121714572232030334, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotateStrength.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6121714572232030334, guid: 72c8164273979924c8cf2a6179743533, type: 3}
+      propertyPath: rotationDuration
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6329891575048268607, guid: 72c8164273979924c8cf2a6179743533, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
