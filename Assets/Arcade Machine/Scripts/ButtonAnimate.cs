@@ -23,6 +23,16 @@ public class JuicyButton : MonoBehaviour,
     [SerializeField] private int punchVibrato = 6;
     [SerializeField] private float punchElasticity = 0.5f;
 
+    [Header("Hover - Cute Shaking")]
+    [SerializeField] private float rotationDuration = 1f;
+    [SerializeField] public Vector3 rotateStrength = new Vector3(0f, 0f, -10f);
+    [SerializeField] public int rotationVibrato = 5;
+    [SerializeField] public float rotationRandomness= 90;
+    [SerializeField] public bool rotationFade;
+    [SerializeField] public int rotationLoop = 1;
+
+
+
     private RectTransform _rect;
     private Vector3 _baseScale;
 
@@ -44,12 +54,22 @@ public class JuicyButton : MonoBehaviour,
     {
         if (glowBorderImage != null)
             glowBorderImage.DOColor(glowColorOn, glowDuration).SetUpdate(true);
+        _rect.DOKill();
+        _rect.DOShakeRotation(rotationDuration, rotateStrength, rotationVibrato, rotationRandomness, rotationFade, ShakeRandomnessMode.Full).SetLoops(rotationLoop, LoopType.Yoyo)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (glowBorderImage != null)
             glowBorderImage.DOColor(glowColorOff, glowDuration).SetUpdate(true);
+        _rect.DOKill();
+        _rect.DOShakeRotation(rotationDuration, rotateStrength, rotationVibrato, rotationRandomness, rotationFade, ShakeRandomnessMode.Full).SetLoops(rotationLoop, LoopType.Yoyo)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(false);
+
+        transform.rotation = Quaternion.Euler(0, -49.27f, 0);
     }
 
     public void OnPointerDown(PointerEventData eventData)
