@@ -1,8 +1,9 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
-    public GameObject bulletPrefab;
+    public GameObject bulletPrefab, typeTextPrefab;
     public Transform shootPoint;
 
     public KeyCode startChargeKey = KeyCode.P;
@@ -17,8 +18,22 @@ public class Shooter : MonoBehaviour
     private int bPressCount = 0;
     private bool isCharging = false;
 
+    private Camera mainCam;
+    private float FOV, wideFOV;
+    private bool fired;
+    private float timePassed;
+    private Quaternion currentRotation;
+
     public bool useCustomDirection = false;// 是否使用自定义方向
     public Vector3 customDirection = Vector3.forward;
+
+    private void Awake()
+    {
+        mainCam = Camera.main;
+        FOV = mainCam.fieldOfView;
+        wideFOV = FOV + 20f;
+        currentRotation = mainCam.transform.rotation;
+    }
 
     private void Update()
     {
@@ -36,15 +51,31 @@ public class Shooter : MonoBehaviour
             if (Input.GetKeyDown(addPowerKey))
             {
                 bPressCount++;
+                GameObject textInstance = Instantiate(typeTextPrefab, new Vector3(0, 0, -100f), Quaternion.identity);
+                textInstance.GetComponent<TypeText>().TextToShow = "B";
+                textInstance.GetComponent<TypeText>().bScale = 1f + bPressCount/10f;
+                mainCam.fieldOfView = Mathf.Lerp(FOV, wideFOV, currentChargeTime / maxChargeTime);
+                mainCam.transform.rotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(28f, 0, 0), currentChargeTime/maxChargeTime);
             }
 
             // 到时间自动发射
             if (currentChargeTime >= maxChargeTime)
             {
+                fired = true;
                 Fire();
                 ResetCharge();
             }
         }
+
+        if (fired)
+        {
+            timePassed += Time.deltaTime;
+            float t = timePassed / 6f;
+            mainCam.fieldOfView = Mathf.Lerp(wideFOV, FOV, t);
+            mainCam.transform.rotation = Quaternion.Lerp(Quaternion.Euler(28f, 0, 0), currentRotation, t);
+            if (t >= 1f) { fired = false; }
+        }
+        else timePassed = 0f;
     }
 
     void StartCharge()
@@ -52,6 +83,8 @@ public class Shooter : MonoBehaviour
         isCharging = true;
         currentChargeTime = 0f;
         bPressCount = 0;
+        GameObject textInstance = Instantiate(typeTextPrefab, new Vector3(0, 0, -100f), Quaternion.identity);
+        textInstance.GetComponent<TypeText>().TextToShow = "P";
     }
 
     void ResetCharge()
@@ -63,6 +96,9 @@ public class Shooter : MonoBehaviour
 
     void Fire()
     {
+        mainCam.fieldOfView = FOV;
+        mainCam.transform.rotation = currentRotation;
+
         if (bulletPrefab == null || shootPoint == null) return;
 
         Vector3 dir = GetShootDirection();
