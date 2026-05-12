@@ -70,7 +70,7 @@ public class Shooter : MonoBehaviour
         if (fired)
         {
             timePassed += Time.deltaTime;
-            float t = timePassed / 6f;
+            float t = timePassed / 2f;
             mainCam.fieldOfView = Mathf.Lerp(wideFOV, FOV, t);
             mainCam.transform.rotation = Quaternion.Lerp(Quaternion.Euler(28f, 0, 0), currentRotation, t);
             if (t >= 1f) { fired = false; }
