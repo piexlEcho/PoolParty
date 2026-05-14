@@ -2,21 +2,22 @@ Shader "Custom/ToonShader"
 {
     Properties
     {
-        _MainTex ("基础色贴图", 2D) = "white" {}
-        _Color ("颜色叠加", Color) = (1, 1, 1, 1)
-        _Darkness ("暗部亮度系数", Range(0, 1)) = 0.5
-        _DiffuseThreshold ("漫反射阈值", Range(0, 1)) = 0.3
-        _DiffuseSmoothness ("漫反射过渡平滑度", Range(0, 0.5)) = 0.05
-        _SpecularColor ("高光颜色", Color) = (1, 1, 1, 1)
-        _SpecularSize ("高光大小", Range(0, 1)) = 0.2
-        _SpecularGloss ("高光光泽度", Range(1, 100)) = 20
-        _RimColor ("边缘光颜色", Color) = (0.5, 0.5, 1, 1)
-        _RimThreshold ("边缘光阈值", Range(0, 1)) = 0.5 // 边缘光出现范围（值越大，光带越窄）
-        _RimSmoothness ("边缘光过渡平滑度", Range(0, 0.5)) = 0.05 // 边缘光硬边程度
-        _RimIntensity ("边缘光强度", Range(0, 5)) = 1
-        _ShadowThreshold ("阴影阈值", Range(0, 1)) = 0.5
-        _ShadowSmoothness ("阴影过渡平滑度", Range(0, 0.5)) = 0.05
+        _MainTex ("Base Color Texture", 2D) = "white" {}
+        _Color ("Color Tint", Color) = (1, 1, 1, 1)
+        _Darkness ("Shadow Brightness Factor", Range(0, 1)) = 0.5
+        _DiffuseThreshold ("Diffuse Threshold", Range(0, 1)) = 0.3
+        _DiffuseSmoothness ("Diffuse Transition Smoothness", Range(0, 0.5)) = 0.05
+        _SpecularColor ("Specular Color", Color) = (1, 1, 1, 1)
+        _SpecularSize ("Specular Size", Range(0, 1)) = 0.2
+        _SpecularGloss ("Specular Glossiness", Range(1, 100)) = 20
+        _RimColor ("Rim Light Color", Color) = (0.5, 0.5, 1, 1)
+        _RimThreshold ("Rim Light Threshold", Range(0, 1)) = 0.5 // Controls rim light width (higher = narrower band)
+        _RimSmoothness ("Rim Light Transition Smoothness", Range(0, 0.5)) = 0.05 // Controls rim edge hardness
+        _RimIntensity ("Rim Light Intensity", Range(0, 5)) = 1
+        _ShadowThreshold ("Shadow Threshold", Range(0, 1)) = 0.5
+        _ShadowSmoothness ("Shadow Transition Smoothness", Range(0, 0.5)) = 0.05
     }
+
     SubShader
     {
         Tags { "RenderType" = "Opaque" }
@@ -60,62 +61,88 @@ Shader "Custom/ToonShader"
             half3 normal = normalize(s.Normal);
             half3 light = normalize(lightDir);
             half3 view = normalize(viewDir);
+
             half NdotL = dot(normal, light);
             half NdotV = dot(normal, view);
+
             half3 halfDir = normalize(light + view);
             half NdotH = dot(normal, halfDir);
 
-            // ----------------- 阴影因子（硬边风格） -----------------
+            // ----------------- Shadow Factor (Hard Edge Style) -----------------
             half shadowLower = max(0, _ShadowThreshold - _ShadowSmoothness);
             half shadowUpper = min(1, _ShadowThreshold + _ShadowSmoothness);
-            half shadowFactor = smoothstep(shadowLower, shadowUpper, atten); // 1 = 完全受光，0 = 完全阴影
 
-            // ----------------- 1. 兰伯特二分漫反射（支持软硬过渡） -----------------
+            // 1 = fully lit, 0 = fully shadowed
+            half shadowFactor = smoothstep(shadowLower, shadowUpper, atten);
+
+            // ----------------- 1. Two-Tone Lambert Diffuse -----------------
             half diffLower = max(0, _DiffuseThreshold - _DiffuseSmoothness);
             half diffUpper = min(1, _DiffuseThreshold + _DiffuseSmoothness);
-            half diffFactor = smoothstep(diffLower, diffUpper, NdotL); // 0~1 漫反射亮部权重
 
-            // 亮部颜色 = 原始颜色 × 主光颜色 × 1
+            // 0~1 diffuse bright area weight
+            half diffFactor = smoothstep(diffLower, diffUpper, NdotL);
+
+            // Lit area color = original color × main light color × 1
             half3 litColor = s.Albedo * _LightColor0.rgb;
-            // 暗部颜色 = 原始颜色 × 主光颜色 × _Darkness
+
+            // Shadow area color = original color × main light color × _Darkness
             half3 darkColor = s.Albedo * _LightColor0.rgb * _Darkness;
 
-            // 最终漫反射：亮部受阴影因子影响（阴影中消失），暗部始终保留
-            half3 diffuseColor = litColor * diffFactor * shadowFactor + darkColor * (1 - diffFactor);
+            // Final diffuse:
+            // Lit area affected by shadow factor, dark area always preserved
+            half3 diffuseColor =
+                litColor * diffFactor * shadowFactor +
+                darkColor * (1 - diffFactor);
 
-            // ----------------- 2. 硬边高光（仅受光面且阴影因子影响） -----------------
+            // ----------------- 2. Hard Edge Specular -----------------
             half spec = 0;
+
+            // Only visible on lit surfaces and affected by shadow factor
             if (NdotL > 0 && shadowFactor > 0)
             {
                 half specIntensity = pow(saturate(NdotH), s.Gloss);
                 spec = step(_SpecularSize, specIntensity);
-                spec *= shadowFactor; // 阴影中消失
-            }
-            half3 specularColor = spec * _SpecularColor * _LightColor0.rgb;
 
-            // ----------------- 3. 硬边边缘光（仅受光面且阴影因子影响） -----------------
+                // Hidden in shadow
+                spec *= shadowFactor;
+            }
+
+            half3 specularColor =
+                spec * _SpecularColor * _LightColor0.rgb;
+
+            // ----------------- 3. Hard Edge Rim Light -----------------
             half rim = 0;
+
+            // Only visible on lit surfaces and affected by shadow factor
             if (NdotL > 0 && shadowFactor > 0)
             {
-                // 边缘光强度基于视线与法线夹角，值越大越边缘
+                // Rim intensity based on angle between view direction and normal
+                // Larger value = closer to edge
                 half rimValue = 1 - saturate(NdotV);
-                // 使用 smoothstep 实现硬边二分
+
+                // Use smoothstep for hard-edge binary effect
                 half rimLower = max(0, _RimThreshold - _RimSmoothness);
                 half rimUpper = min(1, _RimThreshold + _RimSmoothness);
+
                 rim = smoothstep(rimLower, rimUpper, rimValue);
+
                 rim = rim * _RimIntensity * shadowFactor;
             }
+
             half3 rimColor = rim * _RimColor;
 
-            // ----------------- 4. 环境光 -----------------
+            // ----------------- 4. Ambient Light -----------------
             half3 ambient = UNITY_LIGHTMODEL_AMBIENT.rgb * s.Albedo;
 
             half4 c;
             c.rgb = ambient + diffuseColor + specularColor + rimColor;
             c.a = s.Alpha;
+
             return c;
         }
+
         ENDCG
     }
+
     FallBack "Diffuse"
 }
