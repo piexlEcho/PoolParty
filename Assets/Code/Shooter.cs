@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using System.Collections;
 
 public class Shooter : MonoBehaviour
 {
@@ -50,32 +51,50 @@ public class Shooter : MonoBehaviour
             // 按 B 增加蓄力
             if (Input.GetKeyDown(addPowerKey))
             {
+                //print(currentRotation);
                 bPressCount++;
-                GameObject textInstance = Instantiate(typeTextPrefab, new Vector3(0, 0, -100f), Quaternion.identity);
-                textInstance.GetComponent<TypeText>().TextToShow = "B";
-                textInstance.GetComponent<TypeText>().bScale = 1f + bPressCount/10f;
-                mainCam.fieldOfView = Mathf.Lerp(FOV, wideFOV, currentChargeTime / maxChargeTime);
-                mainCam.transform.rotation = Quaternion.Lerp(currentRotation, Quaternion.Euler(28f, 0, 0), currentChargeTime/maxChargeTime);
+                Text("B", 1f + bPressCount/10f);
+                StartCoroutine(LerpFOV(mainCam.fieldOfView + ((wideFOV - FOV) * currentChargeTime/maxChargeTime), 0.1f));
+                StartCoroutine(LerpRotation(Quaternion.Euler(currentRotation.eulerAngles.x + 10f * currentChargeTime/maxChargeTime, currentRotation.eulerAngles.y, currentRotation.eulerAngles.z), 0.1f));
             }
 
             // 到时间自动发射
             if (currentChargeTime >= maxChargeTime)
             {
-                fired = true;
+                StartCoroutine(LerpFOV(FOV, 2f));
+                StartCoroutine(LerpRotation(currentRotation, 2f));
                 Fire();
                 ResetCharge();
             }
         }
+    }
 
-        if (fired)
+    IEnumerator LerpRotation(Quaternion endValue, float duration)
+    {
+        float time = 0;
+        Quaternion startValue = mainCam.transform.rotation;
+
+        while (time < duration)
         {
-            timePassed += Time.deltaTime;
-            float t = timePassed / 2f;
-            mainCam.fieldOfView = Mathf.Lerp(wideFOV, FOV, t);
-            mainCam.transform.rotation = Quaternion.Lerp(Quaternion.Euler(28f, 0, 0), currentRotation, t);
-            if (t >= 1f) { fired = false; }
+            mainCam.transform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
         }
-        else timePassed = 0f;
+        mainCam.transform.rotation = endValue;
+    }
+
+    IEnumerator LerpFOV(float endValue, float duration)
+    {
+        float time = 0;
+        float startValue = mainCam.fieldOfView;
+
+        while (time < duration)
+        {
+            mainCam.fieldOfView = Mathf.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        mainCam.fieldOfView = endValue;
     }
 
     void StartCharge()
@@ -83,8 +102,15 @@ public class Shooter : MonoBehaviour
         isCharging = true;
         currentChargeTime = 0f;
         bPressCount = 0;
+        Text("P", 0);
+        StartCoroutine(LerpFOV(mainCam.fieldOfView - 10f, 0.1f));
+    }
+
+    void Text(string show, float bScale)
+    {
         GameObject textInstance = Instantiate(typeTextPrefab, new Vector3(0, 0, -100f), Quaternion.identity);
-        textInstance.GetComponent<TypeText>().TextToShow = "P";
+        textInstance.GetComponent<TypeText>().TextToShow = show;
+        if (bScale != 0) textInstance.GetComponent<TypeText>().bScale = bScale;
     }
 
     void ResetCharge()
@@ -97,7 +123,8 @@ public class Shooter : MonoBehaviour
     void Fire()
     {
         mainCam.fieldOfView = FOV;
-        mainCam.transform.rotation = currentRotation;
+
+        Text("T", bPressCount + 1.1f);
 
         if (bulletPrefab == null || shootPoint == null) return;
 
