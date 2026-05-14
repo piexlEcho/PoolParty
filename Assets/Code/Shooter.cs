@@ -20,10 +20,11 @@ public class Shooter : MonoBehaviour
     private bool isCharging = false;
 
     private Camera mainCam;
-    private float FOV, wideFOV;
-    private bool fired;
-    private float timePassed;
+    private float FOV;
+    public float wideFOV;
     private Quaternion currentRotation;
+    private Vector3 currentWhoopeeScale;
+    public float whoopeeScale = 3f;
 
     public bool useCustomDirection = false;// 是否使用自定义方向
     public Vector3 customDirection = Vector3.forward;
@@ -32,8 +33,8 @@ public class Shooter : MonoBehaviour
     {
         mainCam = Camera.main;
         FOV = mainCam.fieldOfView;
-        wideFOV = FOV + 20f;
         currentRotation = mainCam.transform.rotation;
+        currentWhoopeeScale = transform.localScale;
     }
 
     private void Update()
@@ -56,13 +57,16 @@ public class Shooter : MonoBehaviour
                 Text("B", 1f + bPressCount/10f);
                 StartCoroutine(LerpFOV(mainCam.fieldOfView + ((wideFOV - FOV) * currentChargeTime/maxChargeTime), 0.1f));
                 StartCoroutine(LerpRotation(Quaternion.Euler(currentRotation.eulerAngles.x + 10f * currentChargeTime/maxChargeTime, currentRotation.eulerAngles.y, currentRotation.eulerAngles.z), 0.1f));
+                StartCoroutine(WhoopeeCushion(currentWhoopeeScale * (1 + whoopeeScale * (currentChargeTime / maxChargeTime)), 0.1f));
             }
 
             // 到时间自动发射
             if (currentChargeTime >= maxChargeTime)
             {
+                Text("T", bPressCount + 1.1f);
                 StartCoroutine(LerpFOV(FOV, 2f));
                 StartCoroutine(LerpRotation(currentRotation, 2f));
+                StartCoroutine(WhoopeeCushion(currentWhoopeeScale, 0.2f));
                 Fire();
                 ResetCharge();
             }
@@ -97,6 +101,20 @@ public class Shooter : MonoBehaviour
         mainCam.fieldOfView = endValue;
     }
 
+    IEnumerator WhoopeeCushion(Vector3 endValue, float duration)
+    {
+        float time = 0;
+        Vector3 startValue = transform.localScale;
+
+        while (time < duration)
+        {
+            transform.localScale = Vector3.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.localScale = endValue;
+    }
+
     void StartCharge()
     {
         isCharging = true;
@@ -122,10 +140,6 @@ public class Shooter : MonoBehaviour
 
     void Fire()
     {
-        mainCam.fieldOfView = FOV;
-
-        Text("T", bPressCount + 1.1f);
-
         if (bulletPrefab == null || shootPoint == null) return;
 
         Vector3 dir = GetShootDirection();
