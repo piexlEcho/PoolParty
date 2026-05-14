@@ -14,7 +14,7 @@ public class PointCounter : MonoBehaviour
 
     void Update()
     {
-        print(points);
+        
     }
 
     void OnTriggerEnter(Collider other)

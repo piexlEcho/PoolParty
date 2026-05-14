@@ -142,6 +142,6 @@ MonoBehaviour:
   maxSpeed: 100
   growthRate: 0.1
   wideFOV: 70
-  whoopeeScale: 2
+  whoopeeScale: 1.25
   useCustomDirection: 0
   customDirection: {x: 0, y: 0, z: 1}
