@@ -51,10 +51,10 @@ public class ArcadeCameraSwitch : MonoBehaviour
         }
         else
         {
-            moveTween = transform.DOMove(targetPoint.position, cameraMoveDuration).SetEase(easeType);
-            rotateTween = transform.DORotateQuaternion(targetPoint.rotation, cameraMoveDuration).SetEase(easeType);
-            scriptToToggle.enabled = true;
+            moveTween = transform.DOMove(originalPosition, cameraMoveDuration).SetEase(easeType);
+            rotateTween = transform.DORotateQuaternion(originalRotation, cameraMoveDuration).SetEase(easeType).OnComplete(() => scriptToToggle.enabled = true);
         }
+
         isAtTarget = !isAtTarget;
     }
 }

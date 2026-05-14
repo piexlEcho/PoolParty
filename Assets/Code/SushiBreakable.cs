@@ -28,6 +28,9 @@ public class SushiBreakable : MonoBehaviour
         if (broken) return;
         if (!collision.gameObject.CompareTag(projectileTag)) return;
 
+        ImpactFrameEffect.Instance?.TriggerImpactFrame();
+   
+
         // 获取撞击信息
         ContactPoint contact = collision.GetContact(0);
         Vector3 impactPoint = contact.point;
