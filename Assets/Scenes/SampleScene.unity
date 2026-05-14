@@ -1327,6 +1327,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2001550088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &354796587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fbd2aa71da8a24d4eba53eccaf495b02, type: 3}
+  m_PrefabInstance: {fileID: 1200290982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &354796590 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbd2aa71da8a24d4eba53eccaf495b02, type: 3}
+  m_PrefabInstance: {fileID: 1200290982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &354796591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354796587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78b157ecf8acf247906bb022bc0d386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 964737104152971915, guid: 3f23e05c62afd66479fd1a1d10fa692b, type: 3}
+  typeTextPrefab: {fileID: 8778680704444758200, guid: 48e26747cf17ffa4cb3457a8586cdc08, type: 3}
+  shootPoint: {fileID: 1245269797}
+  startChargeKey: 112
+  addPowerKey: 98
+  baseSpeed: 10
+  maxChargeTime: 1
+  maxSpeed: 100
+  growthRate: 0.1
+  useCustomDirection: 0
+  customDirection: {x: 0, y: 0, z: 1}
 --- !u!1 &359333984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4442,7 +4475,7 @@ MonoBehaviour:
   targetPoint: {fileID: 1902789131}
   cameraMoveDuration: 1
   easeType: 13
-  scriptToToggle: {fileID: 1879110403}
+  scriptToToggle: {fileID: 0}
   originalPosition: {x: 0, y: 2.77, z: -108.3}
   originalRotation: {x: 16.31, y: 0, z: 0, w: 0}
   isAtTarget: 0
@@ -5864,12 +5897,18 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7a5f619bd629a654b845502bf80dd687, type: 2}
     - target: {fileID: 919132149155446097, guid: fbd2aa71da8a24d4eba53eccaf495b02, type: 3}
       propertyPath: m_Name
-      value: whoopie cushion
+      value: Whoopee cushion
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbd2aa71da8a24d4eba53eccaf495b02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1245269797}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbd2aa71da8a24d4eba53eccaf495b02, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 354796591}
   m_SourcePrefab: {fileID: 100100000, guid: fbd2aa71da8a24d4eba53eccaf495b02, type: 3}
 --- !u!1 &1202187436
 GameObject:
@@ -6056,6 +6095,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2001550088}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1245269796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1245269797}
+  m_Layer: 0
+  m_Name: shootpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1245269797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245269796}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0563755, y: 0.715927, z: 0.6937479, w: 0.05462902}
+  m_LocalPosition: {x: 0.35, y: 2.03, z: -1}
+  m_LocalScale: {x: 0.9984718, y: 3.415307, z: 0.29272643}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 354796590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1247323608
 GameObject:
@@ -9538,113 +9608,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2001550088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1879110402
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1879110407}
-  - component: {fileID: 1879110406}
-  - component: {fileID: 1879110405}
-  - component: {fileID: 1879110403}
-  m_Layer: 0
-  m_Name: Whoopee cushion
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1879110403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879110402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e78b157ecf8acf247906bb022bc0d386, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 964737104152971915, guid: 3f23e05c62afd66479fd1a1d10fa692b, type: 3}
-  typeTextPrefab: {fileID: 8778680704444758200, guid: 48e26747cf17ffa4cb3457a8586cdc08, type: 3}
-  shootPoint: {fileID: 1879110407}
-  startChargeKey: 112
-  addPowerKey: 98
-  baseSpeed: 10
-  maxChargeTime: 1
-  maxSpeed: 100
-  growthRate: 0.1
-  useCustomDirection: 0
-  customDirection: {x: 0, y: 0, z: 1}
---- !u!23 &1879110405
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879110402}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 8bb07edbe3be6194ca0bb1cab10f81d3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1879110406
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879110402}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1879110407
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879110402}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.015731443, y: -0, z: -0, w: 0.99987626}
-  m_LocalPosition: {x: -0.42, y: -3.28, z: -99.25}
-  m_LocalScale: {x: 1.6891509, y: 0.519274, z: 1.8486801}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -1.803, y: 0, z: 0}
 --- !u!1 &1883841669
 GameObject:
   m_ObjectHideFlags: 0
@@ -17556,7 +17519,6 @@ SceneRoots:
   - {fileID: 1564025497}
   - {fileID: 1582830329}
   - {fileID: 1200290982}
-  - {fileID: 1879110407}
   - {fileID: 8371485934704661469}
   - {fileID: 494848936}
   - {fileID: 984901507}
