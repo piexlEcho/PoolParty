@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Darkness: 0.2
+    - _Darkness: 0
     - _DiffuseSmoothness: 0.1
     - _DiffuseThreshold: 0.15
     - _RimIntensity: 1.5
