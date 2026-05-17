@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ImpactLinesMat
-  m_Shader: {fileID: 4800000, guid: 5848d1d4bd1245f4d87283159b7c873f, type: 3}
+  m_Name: Dish
+  m_Shader: {fileID: 4800000, guid: 2fa8ea6556138f946b6a016c8e38a64f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,14 +24,24 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 654ca9ca77157ba42b3dec23e0169e0e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 0.011265099
-    - _LineDensity: 173.27
-    - _LineSpeed: 2
-    - _LineThreshold: 0.271
-    m_Colors: []
+    - _Darkness: 0.25
+    - _DiffuseSmoothness: 0
+    - _DiffuseThreshold: 0.5
+    - _RimIntensity: 0.25
+    - _RimPower: 1.39
+    - _RimSmoothness: 0
+    - _RimThreshold: 0.7
+    - _ShadowSmoothness: 0.5
+    - _ShadowThreshold: 1
+    - _SpecularGloss: 75
+    - _SpecularSize: 0.005
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 1, g: 0.72614044, b: 0.514151, a: 1}
+    - _SpecularColor: {r: 1, g: 0.8449436, b: 0.6745283, a: 1}
   m_BuildTextureStacks: []
