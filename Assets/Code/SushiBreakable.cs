@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 public class SushiBreakable : MonoBehaviour
 {
-    [Header("米粒生成")]
-    public GameObject riceGrainPrefab;          // 米粒预制体
+    [Header("Rice Grain")]
+    public GameObject riceGrainPrefab;
     public Transform[] spawnPoints;
 
-    [Header("爆炸力参数")]
+    [Header("Explosion Force")]
     public float baseExplosionForce = 10f;
     public float randomForceRange = 3f;
     public float upwardBias = 2f;
 
-    [Header("碰撞设置")]
-    public string projectileTag = "Projectile"; // 能触发散开的标签
+    [Header("Collision")]
+    public string projectileTag = "Projectile";
 
     private bool broken = false;
     private Rigidbody rb;
@@ -26,13 +26,16 @@ public class SushiBreakable : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (broken) return;
-        if (!collision.gameObject.CompareTag(projectileTag)) return;
 
-        ImpactFrameEffect.Instance?.TriggerImpactFrame();
-   
+        if (!collision.gameObject.CompareTag(projectileTag))
+            return;
 
-        // 获取撞击信息
+        // 镜头冲击效果
+        CameraImpactEffect.Instance?.TriggerImpact();
+
+        // 获取碰撞信息
         ContactPoint contact = collision.GetContact(0);
+
         Vector3 impactPoint = contact.point;
         Vector3 impactDir = collision.relativeVelocity.normalized;
         float impactSpeed = collision.relativeVelocity.magnitude;
@@ -40,27 +43,42 @@ public class SushiBreakable : MonoBehaviour
         BreakApart(impactPoint, impactDir, impactSpeed);
     }
 
-    void BreakApart(Vector3 impactPoint, Vector3 impactDir, float impactStrength)
+    void BreakApart(
+        Vector3 impactPoint,
+        Vector3 impactDir,
+        float impactStrength
+    )
     {
         broken = true;
 
-        // 记录寿司当前速度（用于继承）
-        Vector3 inheritedVelocity = rb != null ? rb.velocity : Vector3.zero;
-        Vector3 inheritedAngular = rb != null ? rb.angularVelocity : Vector3.zero;
+        // 继承寿司原本速度
+        Vector3 inheritedVelocity =
+            rb != null ? rb.velocity : Vector3.zero;
 
-        // 隐藏寿司整体
+        Vector3 inheritedAngular =
+            rb != null ? rb.angularVelocity : Vector3.zero;
+
+        // 隐藏整体
         SetWholeVisible(false);
 
-        // 生成米粒
         List<GameObject> grains = new List<GameObject>();
+
         foreach (Transform pt in spawnPoints)
         {
             if (pt == null) continue;
 
-            Vector3 worldPos = transform.TransformPoint(pt.localPosition);
-            Quaternion worldRot = transform.rotation * pt.localRotation;
+            Vector3 worldPos =
+                transform.TransformPoint(pt.localPosition);
 
-            GameObject grain = Instantiate(riceGrainPrefab, worldPos, worldRot);
+            Quaternion worldRot =
+                transform.rotation * pt.localRotation;
+
+            GameObject grain = Instantiate(
+                riceGrainPrefab,
+                worldPos,
+                worldRot
+            );
+
             Rigidbody grainRb = grain.GetComponent<Rigidbody>();
 
             if (grainRb != null)
@@ -69,21 +87,52 @@ public class SushiBreakable : MonoBehaviour
                 grainRb.velocity = inheritedVelocity;
                 grainRb.angularVelocity = inheritedAngular;
 
-                // 计算施加的力：基础方向力 + 随机偏移 + 向上分量
-                Vector3 force = (impactDir * 1) * (impactStrength * baseExplosionForce);
+                // 爆炸力
+                Vector3 force =
+                    impactDir * impactStrength * baseExplosionForce;
+
+                // 随机扩散
                 force += Random.insideUnitSphere * randomForceRange;
-                force += Vector3.up * upwardBias;// 应用力
+
+                // 向上偏移
+                force += Vector3.up * upwardBias;
 
                 grainRb.AddForce(force, ForceMode.Impulse);
             }
 
             grains.Add(grain);
         }
-        // 摄像机开始追踪
-        CameraTopDownTracker tracker = Camera.main?.GetComponent<CameraTopDownTracker>();
-        if (tracker != null)
+
+        // 找到速度最快的米粒
+        GameObject mainGrain = null;
+        float maxSpeed = 0f;
+
+        foreach (GameObject grain in grains)
         {
-            tracker.StartTracking();
+            Rigidbody grainRb = grain.GetComponent<Rigidbody>();
+
+            if (grainRb == null) continue;
+
+            float speed = grainRb.velocity.magnitude;
+
+            if (speed > maxSpeed)
+            {
+                maxSpeed = speed;
+                mainGrain = grain;
+            }
+        }
+
+        // Camera 跟随主米粒
+        if (mainGrain != null)
+        {
+            CameraFollowTopDown follow =
+                Camera.main
+                .GetComponentInParent<CameraFollowTopDown>();
+
+            if (follow != null)
+            {
+                follow.SetTarget(mainGrain.transform);
+            }
         }
 
         Destroy(gameObject, 0.05f);
@@ -91,41 +140,62 @@ public class SushiBreakable : MonoBehaviour
 
     void SetWholeVisible(bool visible)
     {
-        foreach (var r in GetComponentsInChildren<Renderer>())
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        {
             r.enabled = visible;
-        foreach (var c in GetComponentsInChildren<Collider>())
+        }
+
+        foreach (Collider c in GetComponentsInChildren<Collider>())
+        {
             c.enabled = visible;
-        if (rb != null) rb.isKinematic = !visible;
+        }
+
+        if (rb != null)
+        {
+            rb.isKinematic = !visible;
+        }
     }
 
     [ContextMenu("Generate Spawn Points From Mesh")]
     void GenerateSpawnPointsFromMesh()
     {
         MeshFilter mf = GetComponent<MeshFilter>();
+
         if (mf == null || mf.sharedMesh == null)
         {
-            Debug.LogError("需要 MeshFilter 和网格");
+            Debug.LogError("需要 MeshFilter 和 Mesh");
             return;
         }
 
-        // 清除旧有点位子物体
+        // 删除旧点位
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            if (transform.GetChild(i).name.StartsWith("SpawnPoint"))
-                DestroyImmediate(transform.GetChild(i).gameObject);
+            Transform child = transform.GetChild(i);
+
+            if (child.name.StartsWith("SpawnPoint"))
+            {
+                DestroyImmediate(child.gameObject);
+            }
         }
 
         Vector3[] verts = mf.sharedMesh.vertices;
+
         List<Transform> points = new List<Transform>();
+
         for (int i = 0; i < verts.Length; i++)
         {
             GameObject go = new GameObject($"SpawnPoint_{i}");
+
             go.transform.parent = transform;
+
             go.transform.localPosition = verts[i];
             go.transform.localRotation = Quaternion.identity;
+
             points.Add(go.transform);
         }
+
         spawnPoints = points.ToArray();
-        Debug.Log($"已生成 {spawnPoints.Length} 个点位");
+
+        Debug.Log($"已生成 {spawnPoints.Length} 个 SpawnPoints");
     }
 }
