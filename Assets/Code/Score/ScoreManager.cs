@@ -12,6 +12,7 @@ public class ScoreManager : MonoBehaviour
     public UnityEvent<int> OnScoreChanged;
 
     private bool isScoreFixed = false;  // 分数是否已固定
+    private float _fishMultiplier = 1f;
 
     void Awake()
     {
@@ -25,11 +26,19 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    // 由老虎机在确认鱼类时调用
+    public void SetFishMultiplier(float multiplier)
+    {
+        _fishMultiplier = multiplier;
+        Debug.Log($"鱼类倍率已设置：{_fishMultiplier}x");
+    }
+
     public void AddScore(int score, string zoneName, GameObject hitObject)
     {
         // 如果分数已固定，不再增减
         if (isScoreFixed) return;
 
+        int finalScore = Mathf.RoundToInt(score * _fishMultiplier);
         totalScore += score;
         Debug.Log($"[+{score}] {hitObject.name} 进入 {zoneName}，总分：{totalScore}");
         OnScoreChanged?.Invoke(totalScore);
@@ -40,6 +49,7 @@ public class ScoreManager : MonoBehaviour
         // 如果分数已固定，不再增减
         if (isScoreFixed) return;
 
+        int finalScore = Mathf.RoundToInt(score * _fishMultiplier);
         totalScore -= score;
         Debug.Log($"[-{score}] {hitObject.name} 离开 {zoneName}，总分：{totalScore}");
         OnScoreChanged?.Invoke(totalScore);
@@ -60,6 +70,7 @@ public class ScoreManager : MonoBehaviour
         }
 
         totalScore = 0;
+        _fishMultiplier = 1f; // 重置鱼类倍率
         OnScoreChanged?.Invoke(totalScore);
         Debug.Log("分数已重置");
     }

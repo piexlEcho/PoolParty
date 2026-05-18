@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 0.044344187
+    - _Intensity: 0.04541105
     - _LineDensity: 173.27
     - _LineSpeed: 2
     - _LineThreshold: 0.271
