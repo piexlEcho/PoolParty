@@ -8,8 +8,6 @@ TagManager:
   - Sushi
   - Shooter
   - RiceGrain
-  - ScoreZone
-  - Score
   layers:
   - Default
   - TransparentFX
