@@ -20,6 +20,7 @@ public class CameraFollowTopDown : MonoBehaviour
 
     private Vector3 velocity;
 
+
     void LateUpdate()
     {
         if (target == null) return;
@@ -36,6 +37,11 @@ public class CameraFollowTopDown : MonoBehaviour
         );
 
         transform.rotation = Quaternion.Euler(cameraAngle);
+    }
+    public void StopFollowing()
+    {
+        target = null;
+        enabled = false;
     }
 
     public void SetTarget(Transform newTarget)

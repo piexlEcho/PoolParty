@@ -15,14 +15,13 @@ public class Shooter : MonoBehaviour
     public float maxSpeed = 200f;
     public float growthRate = 0.35f;
 
+    [Header("Camera Feedback")]
+    public CameraFeedbackController cameraFeedback; // Assign in inspector
+
     private float currentChargeTime = 0f;
     private int bPressCount = 0;
     private bool isCharging = false;
 
-    private Camera mainCam;
-    private float FOV;
-    public float wideFOV;
-    private Quaternion currentRotation;
     private Vector3 currentWhoopeeScale;
     public float whoopeeScale = 1.25f;
 
@@ -31,9 +30,6 @@ public class Shooter : MonoBehaviour
 
     private void Awake()
     {
-        mainCam = Camera.main;
-        FOV = mainCam.fieldOfView;
-        currentRotation = mainCam.transform.rotation;
         currentWhoopeeScale = transform.localScale;
     }
 
@@ -49,57 +45,30 @@ public class Shooter : MonoBehaviour
         {
             currentChargeTime += Time.deltaTime;
 
+            float chargePercent = currentChargeTime / maxChargeTime;
+
+            // Update camera feedback continuously while charging
+            cameraFeedback?.StartCharge(chargePercent);
+
             // 按 B 增加蓄力
             if (Input.GetKeyDown(addPowerKey))
             {
-                //print(currentRotation);
                 bPressCount++;
-                Text("B", 1f + bPressCount/10f);
-                StartCoroutine(LerpFOV(mainCam.fieldOfView + ((wideFOV - FOV) * currentChargeTime/maxChargeTime), 0.1f));
-                StartCoroutine(LerpRotation(Quaternion.Euler(currentRotation.eulerAngles.x + 10f * currentChargeTime/maxChargeTime, currentRotation.eulerAngles.y, currentRotation.eulerAngles.z), 0.1f));
-                print(currentWhoopeeScale * (1 + whoopeeScale * (currentChargeTime / maxChargeTime)));
-                StartCoroutine(WhoopeeCushion(currentWhoopeeScale * (1 + whoopeeScale * (currentChargeTime / maxChargeTime)), 0.1f));
+                Text("B", 1f + bPressCount / 10f);
+                StartCoroutine(WhoopeeCushion(
+                    currentWhoopeeScale * (1 + whoopeeScale * chargePercent), 0.1f));
             }
 
             // 到时间自动发射
             if (currentChargeTime >= maxChargeTime)
             {
-                Text("T", 1f + bPressCount/10f * 3f);
-                StartCoroutine(LerpFOV(FOV, 2f));
-                StartCoroutine(LerpRotation(currentRotation, 2f));
+                Text("T", 1f + bPressCount / 10f * 3f);
                 StartCoroutine(WhoopeeCushion(currentWhoopeeScale, 0.2f));
+                cameraFeedback?.FireKick();
                 Fire();
                 ResetCharge();
             }
         }
-    }
-
-    IEnumerator LerpRotation(Quaternion endValue, float duration)
-    {
-        float time = 0;
-        Quaternion startValue = mainCam.transform.rotation;
-
-        while (time < duration)
-        {
-            mainCam.transform.rotation = Quaternion.Lerp(startValue, endValue, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        mainCam.transform.rotation = endValue;
-    }
-
-    IEnumerator LerpFOV(float endValue, float duration)
-    {
-        float time = 0;
-        float startValue = mainCam.fieldOfView;
-
-        while (time < duration)
-        {
-            mainCam.fieldOfView = Mathf.Lerp(startValue, endValue, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        mainCam.fieldOfView = endValue;
     }
 
     IEnumerator WhoopeeCushion(Vector3 endValue, float duration)
@@ -122,7 +91,7 @@ public class Shooter : MonoBehaviour
         currentChargeTime = 0f;
         bPressCount = 0;
         Text("P", 0);
-        StartCoroutine(LerpFOV(mainCam.fieldOfView - 10f, 0.1f));
+        cameraFeedback?.StartCharge(0f);
     }
 
     void Text(string show, float bScale)
@@ -137,6 +106,7 @@ public class Shooter : MonoBehaviour
         isCharging = false;
         currentChargeTime = 0f;
         bPressCount = 0;
+        cameraFeedback?.ReleaseCharge();
     }
 
     void Fire()

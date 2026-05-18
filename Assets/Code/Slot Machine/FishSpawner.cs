@@ -5,10 +5,10 @@ using UnityEngine;
 public class FishSpawner : MonoBehaviour
 {
     [Header("Fish Prefabs - match order to your FishData array")]
-    public GameObject[] fishPrefabs; // Shrimp, Hokkagi, Tuna, Squid, Salmon, Avocado
+    public GameObject[] fishPrefabs;
 
     [Header("Spawn")]
-    public Transform spawnPoint; // Place this on top of your rice pile
+    public Transform spawnPoint;
 
     private GameObject _currentFish;
 
@@ -18,7 +18,6 @@ public class FishSpawner : MonoBehaviour
 
     public void SpawnFish(int fishIndex)
     {
-        // Clear any previous fish
         if (_currentFish != null)
             Destroy(_currentFish);
 

@@ -118,6 +118,7 @@ public class ScoreStabilityMonitor : MonoBehaviour
 
         // 4. 等待后移动中心点
         StartCoroutine(MoveCenterPointAfterDelay());
+        CameraSequenceController.Instance?.BeginEndSequence();
     }
 
     void FixCurrentScore()
