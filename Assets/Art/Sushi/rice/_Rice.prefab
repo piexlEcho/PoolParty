@@ -9670,15 +9670,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9747,6 +9747,9 @@ PrefabInstance:
       addedObject: {fileID: 7479290201665635057}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 7762242185907433245}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5573561746938965987}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
@@ -9763,6 +9766,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b3aec2a3f0d073f4382a2e088626203c, type: 3}
   m_PrefabInstance: {fileID: 2309464978458023316}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7762242185907433245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3228438785993681093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e598ab614e3a0f64ea38fed902baf8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreValue: 1
 --- !u!54 &5573561746938965987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9787,9 +9803,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &8116164595955968214
 MeshCollider:
   m_ObjectHideFlags: 0
