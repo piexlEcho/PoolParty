@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +22,9 @@ public class ArcadeCameraSwitch : MonoBehaviour
     [SerializeField] private Tween moveTween;
     [SerializeField] private Tween rotateTween;
 
+    [Header("Input")]
+    public bool escEnabled = false;
+
     private void Start()
     {
         originalPosition = transform.position;
@@ -34,6 +37,7 @@ public class ArcadeCameraSwitch : MonoBehaviour
 
     public void Update()
     {
+        if (!escEnabled) return; // ← guard
         if (Input.GetKeyDown(KeyCode.Escape))
             ToggleCamera();
     }
@@ -45,7 +49,7 @@ public class ArcadeCameraSwitch : MonoBehaviour
 
         if (!isAtTarget)
         {
-            // Panning TO slot machine � disable gameplay scripts immediately
+            // Panning TO slot machine — disable gameplay scripts immediately
             GameState.Phase = GamePhase.Menu;
             foreach (var script in scriptsToToggle) script.enabled = false;
 
@@ -61,7 +65,7 @@ public class ArcadeCameraSwitch : MonoBehaviour
         }
         else
         {
-            // Panning BACK to game � re-enable scripts once arrived
+            // Panning BACK to game — re-enable scripts once arrived
             moveTween = transform.DOMove(originalPosition, cameraMoveDuration).SetEase(easeType);
             rotateTween = transform.DORotateQuaternion(originalRotation, cameraMoveDuration)
                 .SetEase(easeType)
@@ -69,6 +73,8 @@ public class ArcadeCameraSwitch : MonoBehaviour
                 {
                     foreach (var script in scriptsToToggle) script.enabled = true;
                     GameState.Phase = GamePhase.Shooting;
+                    if (GameState.PreviousPhase == GamePhase.Shooting)
+                        RoundManager.Instance?.StartRound();
                 });
         }
 

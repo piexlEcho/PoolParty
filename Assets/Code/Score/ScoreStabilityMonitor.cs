@@ -103,6 +103,8 @@ public class ScoreStabilityMonitor : MonoBehaviour
         if (isStableCompleted) return;
         isStableCompleted = true;
 
+        RoundManager.Instance?.EndRound();
+
         // 1. 固定分数（不再受进出区域影响）
         FixCurrentScore();
 

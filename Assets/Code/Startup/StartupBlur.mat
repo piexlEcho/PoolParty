@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ImpactLinesMat
-  m_Shader: {fileID: 4800000, guid: 5848d1d4bd1245f4d87283159b7c873f, type: 3}
+  m_Name: StartupBlur
+  m_Shader: {fileID: 4800000, guid: ab4320c5b6a76ee478b5ce165005620d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,9 +29,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 0.06377995
-    - _LineDensity: 173.27
-    - _LineSpeed: 2
-    - _LineThreshold: 0.271
+    - _BlurSize: 0
     m_Colors: []
   m_BuildTextureStacks: []

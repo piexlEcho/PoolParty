@@ -113,7 +113,29 @@ public class SlotMachine : MonoBehaviour
         int fishIndex = System.Array.IndexOf(fishTypes, _result);
         fishSpawner?.SpawnFish(fishIndex);
 
+        arcadeCamera.escEnabled = true;
+
         // Pan camera to game
         arcadeCamera?.ToggleCamera();
+    }
+    void OnEnable()
+    {
+        // Guard against OnEnable firing before Start when references aren't set yet
+        if (spinButton == null) return;
+
+        spinButton.interactable = true;
+        confirmButton.interactable = false;
+
+        if (multiplierText != null)
+            multiplierText.text = "?";
+
+        foreach (var img in slotImages)
+            if (img != null) img.sprite = null;
+
+        foreach (var label in slotLabels)
+            if (label != null) label.text = "-";
+
+        _result = null;
+        _isSpinning = false;
     }
 }

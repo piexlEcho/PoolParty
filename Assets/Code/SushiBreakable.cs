@@ -30,6 +30,8 @@ public class SushiBreakable : MonoBehaviour
         if (!collision.gameObject.CompareTag(projectileTag))
             return;
 
+        RoundManager.Instance?.StartFailTimer();
+
         // 镜头冲击效果
         CameraImpactEffect.Instance?.TriggerImpact();
 

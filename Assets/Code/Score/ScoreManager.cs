@@ -70,6 +70,8 @@ public class ScoreManager : MonoBehaviour
 
         // 触发事件
         OnScoreChanged?.Invoke(totalScore);
+
+        RoundManager.Instance?.NotifyScoreRegistered();
     }
 
     public void SubtractScore(int score, string zoneName, GameObject hitObject)

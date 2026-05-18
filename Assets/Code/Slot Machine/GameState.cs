@@ -12,5 +12,16 @@ public enum GamePhase
 
 public static class GameState
 {
-    public static GamePhase Phase = GamePhase.Menu;
+    private static GamePhase _phase = GamePhase.Menu;
+    public static GamePhase PreviousPhase { get; private set; } = GamePhase.Menu;
+
+    public static GamePhase Phase
+    {
+        get => _phase;
+        set
+        {
+            PreviousPhase = _phase;
+            _phase = value;
+        }
+    }
 }
