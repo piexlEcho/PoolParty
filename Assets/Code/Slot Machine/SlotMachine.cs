@@ -115,12 +115,10 @@ public class SlotMachine : MonoBehaviour
 
         arcadeCamera.escEnabled = true;
 
-        // Pan camera to game
         arcadeCamera?.ToggleCamera();
     }
     void OnEnable()
     {
-        // Guard against OnEnable firing before Start when references aren't set yet
         if (spinButton == null) return;
 
         spinButton.interactable = true;
