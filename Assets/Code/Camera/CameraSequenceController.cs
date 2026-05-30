@@ -55,9 +55,20 @@ public class CameraSequenceController : MonoBehaviour
 
         GameState.Phase = GamePhase.Results;
 
-        arcadeCamera?.ToggleCamera();
-    }
+        RoundManager.Instance?.CompleteRound();
 
+        arcadeCamera?.ToggleCamera();
+
+        yield return new WaitForSeconds(arcadeCamera.cameraMoveDuration);
+        ClearAllRice();
+    }
+    void ClearAllRice()
+    {
+        foreach (var grain in GameObject.FindGameObjectsWithTag("RiceGrain"))
+            Destroy(grain);
+
+        FishSpawner.Instance?.ClearFish();
+    }
     IEnumerator PanCamera(Transform target, float duration, Ease ease)
     {
         if (target == null) yield break;

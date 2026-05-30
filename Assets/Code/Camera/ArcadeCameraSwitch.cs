@@ -61,6 +61,8 @@ public class ArcadeCameraSwitch : MonoBehaviour
                     // Only clear rice if a round just finished, not a casual ESC mid-game
                     if (GameState.Phase == GamePhase.Results)
                         ClearRiceGrains();
+
+                    FindObjectOfType<SlotMachine>()?.ResetForNewRound();
                 });
         }
         else
@@ -73,8 +75,7 @@ public class ArcadeCameraSwitch : MonoBehaviour
                 {
                     foreach (var script in scriptsToToggle) script.enabled = true;
                     GameState.Phase = GamePhase.Shooting;
-                    if (GameState.PreviousPhase == GamePhase.Shooting)
-                        RoundManager.Instance?.StartRound();
+                    RoundManager.Instance?.StartRound();
                 });
         }
 
@@ -86,5 +87,15 @@ public class ArcadeCameraSwitch : MonoBehaviour
         GameObject[] grains = GameObject.FindGameObjectsWithTag("RiceGrain");
         foreach (var grain in grains)
             Destroy(grain);
+    }
+    void ClearAllRice()
+    {
+        foreach (var grain in GameObject.FindGameObjectsWithTag("RiceGrain"))
+            Destroy(grain);
+
+        foreach (var scored in GameObject.FindGameObjectsWithTag("Score"))
+            Destroy(scored);
+
+        FishSpawner.Instance?.ClearFish();
     }
 }

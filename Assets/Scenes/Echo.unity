@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
+  m_IndirectSpecularColor: {r: 0.18266821, g: 0.22837836, b: 0.3071254, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1210,11 +1211,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &531438828 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 388219625127436682, guid: 93583889729339e46a6df4f7dc38f641, type: 3}
-  m_PrefabInstance: {fileID: 8176400639973633339}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &615604753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4663,12 +4659,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961121251}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0206}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.49682844, y: 0.5031516, z: 0.5031516, w: 0.49682844}
+  m_LocalPosition: {x: -0.32999992, y: -1.56, z: -82.08}
+  m_LocalScale: {x: 150, y: 150, z: 150}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 531438828}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2118333854 stripped
 MonoBehaviour:
@@ -4893,10 +4889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 388219625127436682, guid: 93583889729339e46a6df4f7dc38f641, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1961121252}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93583889729339e46a6df4f7dc38f641, type: 3}
 --- !u!1660057539 &9223372036854775807
@@ -4908,6 +4901,7 @@ SceneRoots:
   - {fileID: 1564025497}
   - {fileID: 8176400639973633339}
   - {fileID: 494848936}
+  - {fileID: 1961121252}
   - {fileID: 984901507}
   - {fileID: 5475059173675838378}
   - {fileID: 1541846846}

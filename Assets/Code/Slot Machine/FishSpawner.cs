@@ -18,6 +18,14 @@ public class FishSpawner : MonoBehaviour
 
     public void SpawnFish(int fishIndex)
     {
+        Debug.Log($"SpawnFish called — spawnPoint: {spawnPoint}, _currentFish: {_currentFish}");
+        if (spawnPoint == null)
+        {
+            Debug.LogError("spawnPoint is null!");
+            return;
+        }
+        //debugs
+
         if (_currentFish != null)
             Destroy(_currentFish);
 

@@ -40,6 +40,7 @@ public class SlotMachine : MonoBehaviour
         if (_isSpinning) return;
         spinButton.interactable = false;
         confirmButton.interactable = false;
+        RoundManager.Instance?.SpawnRiceBall();
 
         if (multiplierText != null)
             multiplierText.text = "?";
@@ -117,7 +118,8 @@ public class SlotMachine : MonoBehaviour
 
         arcadeCamera?.ToggleCamera();
     }
-    void OnEnable()
+
+    public void ResetForNewRound()
     {
         if (spinButton == null) return;
 

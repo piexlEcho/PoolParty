@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RoundManager : MonoBehaviour
@@ -16,15 +17,27 @@ public class RoundManager : MonoBehaviour
     [Header("References")]
     public Shooter shooter;
     public CameraFollowTopDown cameraFollowTopDown;
+    public SlotMachine slotMachine;
+
+    [Header("UI")]
+    public TextMeshProUGUI roundText;
+    public TextMeshProUGUI totalPointsText;
 
     private bool _roundActive = false;
     private bool _scoreRegistered = false;
     private Coroutine _failTimerCoroutine;
     private GameObject _currentRiceBall;
     public ArcadeCameraSwitch arcadeCamera;
+    public ScoreStabilityMonitor stabilityMonitor;
+
+    private int _currentRound = 0;
+    private int _totalPoints = 0;
 
     void Awake() => Instance = this;
-
+    void Start()
+    {
+        UpdateUI();
+    }
     public void StartRound()
     {
         _roundActive = true;
@@ -32,8 +45,12 @@ public class RoundManager : MonoBehaviour
 
         ScoreManager.Instance?.UnfixScore();
         ScoreManager.Instance?.ResetScore();
+        ScoreManager.Instance?.ResetScoreMark();
 
-        SpawnRiceBall();
+        stabilityMonitor?.ResetForNewRound();
+
+        if (cameraFollowTopDown != null)
+            cameraFollowTopDown.enabled = true;
     }
 
     public void NotifyScoreRegistered()
@@ -90,7 +107,30 @@ public class RoundManager : MonoBehaviour
         arcadeCamera?.ToggleCamera();
     }
 
-    void SpawnRiceBall()
+    public void CompleteRound()
+    {
+        _roundActive = false;
+
+        if (_failTimerCoroutine != null)
+        {
+            StopCoroutine(_failTimerCoroutine);
+            _failTimerCoroutine = null;
+        }
+
+        // Tally points from this round
+        int roundScore = ScoreManager.Instance?.GetTotalScore() ?? 0;
+        _totalPoints += roundScore;
+        _currentRound++;
+
+        UpdateUI();
+
+        // Reset slot machine UI now that we're heading back
+        slotMachine?.ResetForNewRound();
+
+        Debug.Log($"Round {_currentRound} complete — Round score: {roundScore} | Total points: {_totalPoints}");
+    }
+
+    public void SpawnRiceBall()
     {
         if (_currentRiceBall != null)
             Destroy(_currentRiceBall);
@@ -115,4 +155,14 @@ public class RoundManager : MonoBehaviour
             _failTimerCoroutine = null;
         }
     }
+    void UpdateUI()
+    {
+        if (roundText != null)
+            roundText.text = $"Round: {_currentRound + 1}";
+
+        if (totalPointsText != null)
+            totalPointsText.text = $"Points: {_totalPoints}";
+    }
+    public int GetTotalPoints() => _totalPoints;
+    public int GetCurrentRound() => _currentRound;
 }

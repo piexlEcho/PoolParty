@@ -100,6 +100,7 @@ public class ScoreStabilityMonitor : MonoBehaviour
 
     void OnStabilityReached()
     {
+        Debug.Log("OnStabilityReached fired");
         if (isStableCompleted) return;
         isStableCompleted = true;
 
@@ -243,6 +244,32 @@ public class ScoreStabilityMonitor : MonoBehaviour
             StopCoroutine(stabilityCoroutine);
         }
         OnStabilityReached();
+    }
+
+    public void ResetForNewRound()
+    {
+        isStableCompleted = false;
+        isScoreFixed = false;
+        isAttracting = false;
+
+        foreach (GameObject obj in attractedObjects)
+        {
+            if (obj != null)
+            {
+                Rigidbody rb = obj.GetComponent<Rigidbody>();
+                if (rb != null) rb.useGravity = true;
+            }
+        }
+        attractedObjects.Clear();
+
+        if (attractCenterPoint != null)
+            attractCenterPoint.position = originalCenterPointPosition;
+
+        if (stabilityCoroutine != null)
+        {
+            StopCoroutine(stabilityCoroutine);
+            stabilityCoroutine = null;
+        }
     }
 
     void OnDestroy()
