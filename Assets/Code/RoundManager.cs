@@ -29,6 +29,7 @@ public class RoundManager : MonoBehaviour
     private GameObject _currentRiceBall;
     public ArcadeCameraSwitch arcadeCamera;
     public ScoreStabilityMonitor stabilityMonitor;
+    public DishCam dishCameraTransition;
 
     private int _currentRound = 0;
     private int _totalPoints = 0;
@@ -48,9 +49,11 @@ public class RoundManager : MonoBehaviour
         ScoreManager.Instance?.ResetScoreMark();
 
         stabilityMonitor?.ResetForNewRound();
+        dishCameraTransition?.ResetForNewRound();
 
         if (cameraFollowTopDown != null)
             cameraFollowTopDown.enabled = true;
+
     }
 
     public void NotifyScoreRegistered()
