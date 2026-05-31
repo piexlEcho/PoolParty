@@ -6,7 +6,7 @@ using DG.Tweening;
 public class DishCam : MonoBehaviour
 {
     [Header("Dish Overview")]
-    public Transform dishViewPoint;        // Empty GameObject positioned above the dish
+    public Transform dishViewPoint;
     public float transitionDuration = 1f;
     public Ease transitionEase = Ease.InOutQuad;
 
@@ -22,29 +22,28 @@ public class DishCam : MonoBehaviour
     {
         _cam = Camera.main.transform;
     }
-
-    // Called by RoundManager.StartRound() to reset each round
     public void ResetForNewRound()
     {
+        Debug.Log($"[DishCam] ResetForNewRound called — _triggered was {_triggered}, enabled was {enabled}");
         _triggered = false;
         enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (_triggered) return;
+        Debug.Log($"[DishCam] OnTriggerEnter hit — object: {other.name}, tag: {other.tag}, _triggered: {_triggered}, enabled: {enabled}");
+
+        if (_triggered) return; 
         if (!other.CompareTag("RiceGrain")) return;
+
+        Debug.Log($"[DishCam] Transitioning — cameraFollow null: {cameraFollow == null}, _cam null: {_cam == null}, dishViewPoint null: {dishViewPoint == null}");
 
         _triggered = true;
 
-        // Stop camera following the grain
         if (cameraFollow != null)
             cameraFollow.StopFollowing();
 
-        // Smoothly pan to dish overview position
-        _cam.DOMove(dishViewPoint.position, transitionDuration)
-            .SetEase(transitionEase);
-        _cam.DORotateQuaternion(dishViewPoint.rotation, transitionDuration)
-            .SetEase(transitionEase);
+        _cam.DOMove(dishViewPoint.position, transitionDuration).SetEase(transitionEase);
+        _cam.DORotateQuaternion(dishViewPoint.rotation, transitionDuration).SetEase(transitionEase);
     }
 }

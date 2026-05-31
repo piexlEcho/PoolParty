@@ -15,11 +15,12 @@ public class SlotMachine : MonoBehaviour
 
     [Header("Buttons")]
     public Button spinButton;
-    public Button confirmButton;
+    public Button backButton;
 
     [Header("Spin Settings")]
     public float spinDuration = 2f;
     public float spinTickInterval = 0.08f;
+    public float autoConfirmDelay = 1.5f;
 
     [Header("References")]
     public ArcadeCameraSwitch arcadeCamera;
@@ -30,21 +31,23 @@ public class SlotMachine : MonoBehaviour
 
     void Start()
     {
-        confirmButton.interactable = false;
+        SetSlotsVisible(false);
         spinButton.onClick.AddListener(OnSpin);
-        confirmButton.onClick.AddListener(OnConfirm);
     }
 
     public void OnSpin()
     {
         if (_isSpinning) return;
+
         spinButton.interactable = false;
-        confirmButton.interactable = false;
-        RoundManager.Instance?.SpawnRiceBall();
+        if (backButton != null) backButton.interactable = false;
+        arcadeCamera.escEnabled = false;
+        SetSlotsVisible(true);
 
         if (multiplierText != null)
             multiplierText.text = "?";
 
+        RoundManager.Instance?.SpawnRiceBall();
         StartCoroutine(SpinRoutine());
     }
 
@@ -81,10 +84,35 @@ public class SlotMachine : MonoBehaviour
             multiplierText.text = $"{_result.multiplier}x";
 
         _isSpinning = false;
-        spinButton.interactable = true;
-        confirmButton.interactable = true;
-    }
 
+        yield return new WaitForSeconds(autoConfirmDelay);
+
+        AutoConfirm();
+    }
+    void AutoConfirm()
+    {
+        if (_result == null) return;
+
+        ScoreManager.Instance?.SetFishMultiplier(_result.multiplier);
+
+        int fishIndex = System.Array.IndexOf(fishTypes, _result);
+        fishSpawner?.SpawnFish(fishIndex);
+
+        arcadeCamera.escEnabled = true;
+        arcadeCamera?.ToggleCamera();
+    }
+    public void EnableBackButton()
+    {
+        if (backButton != null)
+            backButton.interactable = true;
+    }
+    void SetSlotsVisible(bool visible)
+    {
+        foreach (var img in slotImages)
+            if (img != null) img.enabled = visible;
+        foreach (var label in slotLabels)
+            if (label != null) label.enabled = visible;
+    }
     FishData PickWeightedFish()
     {
         float total = 0f;
@@ -102,29 +130,13 @@ public class SlotMachine : MonoBehaviour
         return fishTypes[fishTypes.Length - 1];
     }
 
-    void OnConfirm()
-    {
-        if (_result == null) return;
-
-        confirmButton.interactable = false;
-        spinButton.interactable = false;
-
-        ScoreManager.Instance?.SetFishMultiplier(_result.multiplier);
-
-        int fishIndex = System.Array.IndexOf(fishTypes, _result);
-        fishSpawner?.SpawnFish(fishIndex);
-
-        arcadeCamera.escEnabled = true;
-
-        arcadeCamera?.ToggleCamera();
-    }
-
     public void ResetForNewRound()
     {
         if (spinButton == null) return;
 
         spinButton.interactable = true;
-        confirmButton.interactable = false;
+        if (backButton != null) backButton.interactable = true;
+        SetSlotsVisible(false);
 
         if (multiplierText != null)
             multiplierText.text = "?";

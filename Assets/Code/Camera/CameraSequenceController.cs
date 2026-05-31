@@ -24,6 +24,9 @@ public class CameraSequenceController : MonoBehaviour
     [Header("Timing")]
     public float delayBeforeScoreboard = 1f;
 
+    [Header("References")]
+    public SlotMachine slotMachine;
+
     private Transform _cam;
 
     void Awake()
@@ -61,6 +64,7 @@ public class CameraSequenceController : MonoBehaviour
 
         yield return new WaitForSeconds(arcadeCamera.cameraMoveDuration);
         ClearAllRice();
+        slotMachine?.EnableBackButton();
     }
     void ClearAllRice()
     {

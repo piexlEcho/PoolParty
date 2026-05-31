@@ -51,6 +51,10 @@ public class RoundManager : MonoBehaviour
         stabilityMonitor?.ResetForNewRound();
         dishCameraTransition?.ResetForNewRound();
 
+        if (dishCameraTransition == null)
+            dishCameraTransition = FindObjectOfType<DishCam>();
+        dishCameraTransition?.ResetForNewRound();
+
         if (cameraFollowTopDown != null)
             cameraFollowTopDown.enabled = true;
 
@@ -127,9 +131,6 @@ public class RoundManager : MonoBehaviour
 
         UpdateUI();
 
-        // Reset slot machine UI now that we're heading back
-        slotMachine?.ResetForNewRound();
-
         Debug.Log($"Round {_currentRound} complete — Round score: {roundScore} | Total points: {_totalPoints}");
     }
 
@@ -161,10 +162,10 @@ public class RoundManager : MonoBehaviour
     void UpdateUI()
     {
         if (roundText != null)
-            roundText.text = $"Round: {_currentRound + 1}";
+            roundText.text = $"{_currentRound + 1}";
 
         if (totalPointsText != null)
-            totalPointsText.text = $"Points: {_totalPoints}";
+            totalPointsText.text = $"{_totalPoints}";
     }
     public int GetTotalPoints() => _totalPoints;
     public int GetCurrentRound() => _currentRound;
